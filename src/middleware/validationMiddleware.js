@@ -73,7 +73,7 @@ export const updateProfileValidation = [
 
 // Middleware for update password validation
 
-export const forgotPasswordValidation = [
+export const resetPasswordValidation = [
     body('newPassword')
         .isLength({ min: 6, max: 20 }).withMessage('Password must be between 6 and 20 characters')
         .matches(/[A-Z]/).withMessage('Password must include at least one uppercase letter')

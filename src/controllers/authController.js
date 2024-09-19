@@ -113,7 +113,7 @@ export const login = async (req, res) => {
 // @access  Public
 // @req     { username | email | phoneNumber, newPassword, otpVerified }
 
-export const forgotPassword = async (req, res) => {
+export const resetPassword = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -144,8 +144,6 @@ export const forgotPassword = async (req, res) => {
         // Update the user's password
         if (newPassword) {
             // Hash the new password before saving
-            // const salt = await bcrypt.genSalt(10);
-            // user.password = await bcrypt.hash(newPassword, salt);
             user.password = newPassword;
             // Save the user with the new password
             await user.save();

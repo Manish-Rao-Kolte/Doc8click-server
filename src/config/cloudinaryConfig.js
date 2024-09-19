@@ -11,7 +11,7 @@ cloudinary.config({
 // Upload image to Cloudinary
 export const uploadImage = async (file) => {
     return new Promise((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
+        cloudinary.v2.uploader.upload_stream(
             {
                 resource_type: 'image',
                 folder: 'profile-images',
@@ -21,7 +21,7 @@ export const uploadImage = async (file) => {
                 if (error) {
                     console.error('Failed to upload image to Cloudinary:', error); 
                     return reject(new Error('Failed to upload image to Cloudinary'));
-                }
+                }              
                 resolve(result.secure_url); // Return the URL of the uploaded image
             }
         ).end(file.buffer);

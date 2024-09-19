@@ -20,7 +20,7 @@ export const updateProfile = async (req, res) => {
         // Find user by ID
         const user = await User.findById(userId);        
         if (!user) return res.status(404).json({ msg: 'User not found' });
-
+        
         // Prepare the fields to update
         const updatedData = {};
         if (firstName) updatedData.firstName = firstName;
@@ -36,14 +36,13 @@ export const updateProfile = async (req, res) => {
             } catch (error) {
                 return res.status(500).json({ msg: 'Failed to upload image' });
             }
-        }
+        }       
 
         // Handle password update if user wanted to change it
-        if (password) {
+        if (password) {         
             // Hash the new password before saving
-            // const salt = await bcrypt.genSalt(10);
-            // updatedData.password = await bcrypt.hash(password, salt);
-            updatedData.password = password;
+            const salt = await bcrypt.genSalt(10);
+            updatedData.password = await bcrypt.hash(password, salt);
         }
 
         // Update the user profile

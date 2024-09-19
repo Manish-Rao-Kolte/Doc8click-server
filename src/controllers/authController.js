@@ -1,7 +1,7 @@
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
-const config = require('../config/config');
-const { validationResult } = require('express-validator');
+import User from '../models/user.js';
+import jwt from 'jsonwebtoken';
+import {config} from '../config/config.js';
+import { validationResult } from 'express-validator';
 
 // Helper function to generate JWT tokens
 const generateToken = (user) => {
@@ -12,7 +12,7 @@ const generateToken = (user) => {
 // @desc    Register a new user
 // @access  Public
 // @req     { username, email, phoneNumber, firstName, lastName, }
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -62,7 +62,7 @@ exports.signup = async (req, res) => {
 // @desc    Authenticate user and get token
 // @access  Public
 // @req     { email, phoneNumber, password }
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -103,6 +103,55 @@ exports.login = async (req, res) => {
             token,
             refreshToken
         });
+    } catch (error) {
+        res.status(500).json({ msg: 'Server error' });
+    }
+};
+
+// @route   PUT api/auth/forgot-password
+// @desc    Forgot password
+// @access  Public
+// @req     { username | email | phoneNumber, newPassword, otpVerified }
+
+export const forgotPassword = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email, phoneNumber, username, newPassword, otpVerified } = req.body;
+
+    // Check if the OTP verification flag is passed and true
+    if (!otpVerified) {
+        return res.status(403).json({ msg: 'OTP verification required' });
+    }
+
+    try {
+        // Find user by email, phoneNumber, or username
+        const user = await User.findOne({
+            $or: [
+                { email },
+                { phoneNumber },
+                { username }
+            ]
+        });
+
+        // If user not found
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+
+        // Update the user's password
+        if (newPassword) {
+            // Hash the new password before saving
+            // const salt = await bcrypt.genSalt(10);
+            // user.password = await bcrypt.hash(newPassword, salt);
+            user.password = newPassword;
+            // Save the user with the new password
+            await user.save();
+        }
+
+        res.json({ msg: 'Password has been updated successfully' });
     } catch (error) {
         res.status(500).json({ msg: 'Server error' });
     }

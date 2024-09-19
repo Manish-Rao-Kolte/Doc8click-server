@@ -1,7 +1,7 @@
-const { body, validationResult } = require('express-validator');
+import { body } from 'express-validator';
 
 // Middleware for signup validation
-exports.signupValidation = [
+export const signupValidation = [
     body('username')
         .notEmpty().withMessage('Username is required')
         .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long'),
@@ -37,7 +37,7 @@ exports.signupValidation = [
 ];
 
 // Middleware for login validation
-exports.loginValidation = [
+export const loginValidation = [
     body('email')
         .optional().isEmail().withMessage('Invalid email address'),
     
@@ -49,7 +49,7 @@ exports.loginValidation = [
 ];
 
 // Middleware for update profile validation
-exports.updateProfileValidation = [
+export const updateProfileValidation = [
     body('phoneNumber')
         .optional()
         .isMobilePhone().withMessage('Invalid phone number'),
@@ -69,4 +69,16 @@ exports.updateProfileValidation = [
     body('image')
         .optional()
         .isURL().withMessage('Invalid image URL')
+];
+
+// Middleware for update password validation
+
+export const forgotPasswordValidation = [
+    body('newPassword')
+        .isLength({ min: 6, max: 20 }).withMessage('Password must be between 6 and 20 characters')
+        .matches(/[A-Z]/).withMessage('Password must include at least one uppercase letter')
+        .matches(/[a-z]/).withMessage('Password must include at least one lowercase letter')
+        .matches(/[0-9]/).withMessage('Password must include at least one number')
+        .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage('Password must include at least one special character')
+        .notEmpty().withMessage('Password is required')
 ];

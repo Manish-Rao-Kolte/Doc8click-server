@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const config = require('../config/config');
+import jwt from 'jsonwebtoken';
+import { config } from '../config/config.js';
 
-module.exports = (req, res, next) => {
+export const authMiddleware = (req, res, next) => {
     // Get the token from the Authorization header
     const authHeader = req.header('Authorization'); 
 

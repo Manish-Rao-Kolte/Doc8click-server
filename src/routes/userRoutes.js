@@ -1,13 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const authMiddleware = require('../middleware/authMiddleware');
-const { updateProfile } = require('../controllers/userController');
-const upload = require('../config/multerConfig');
-const { updateProfileValidation } = require('../middleware/validationMiddleware');
+import { Router } from 'express';
+import { authMiddleware } from '../middleware/authMiddleware.js';
+import { updateProfile } from '../controllers/userController.js';
+import { upload } from '../config/multerConfig.js';
+import { updateProfileValidation } from '../middleware/validationMiddleware.js';
+
+const userRouter = Router();
 
 // @route   PUT api/user/update
 // @desc    Update user profile
 // @access  Private
-router.put('/update', authMiddleware, upload.single('image'), updateProfileValidation, updateProfile);
+userRouter.put('/update', authMiddleware, upload.single('image'), updateProfileValidation, updateProfile);
 
-module.exports = router;
+export default userRouter;

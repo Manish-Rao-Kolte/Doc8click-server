@@ -1,9 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const { signup, login } = require('../controllers/authController');
-const { signupValidation, loginValidation } = require('../middleware/validationMiddleware');
+import { Router } from 'express';
+import { signup, login, forgotPassword } from '../controllers/authController.js';
+import { signupValidation, loginValidation, forgotPasswordValidation } from '../middleware/validationMiddleware.js';
 
-router.post('/signup', signupValidation, signup);
-router.post('/login', loginValidation, login);
+const authRouter = Router();
 
-module.exports = router;
+authRouter.post('/signup', signupValidation, signup);
+authRouter.post('/login', loginValidation, login);
+authRouter.post('/forgot-password', forgotPasswordValidation, forgotPassword);
+
+export default authRouter;

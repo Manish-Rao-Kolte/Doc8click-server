@@ -1,7 +1,8 @@
-const mongoose = require('mongoose');
-const config = require('./config');
+import mongoose from 'mongoose';
+import { config } from './config.js';
 
-const connectDB = async () => {
+
+export const connectDB = async () => {
     try {
         if(config.NODE_ENV === 'development') {
             mongoose.set('debug', true);
@@ -22,4 +23,3 @@ const connectDB = async () => {
     }
 };
 
-module.exports = connectDB;

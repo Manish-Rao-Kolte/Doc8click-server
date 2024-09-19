@@ -1,5 +1,5 @@
-const cloudinary = require('cloudinary').v2;
-const config = require('./config');
+import cloudinary from 'cloudinary';
+import {config} from './config.js';
 
 // Configure Cloudinary
 cloudinary.config({
@@ -9,7 +9,7 @@ cloudinary.config({
 });
 
 // Upload image to Cloudinary
-const uploadImage = async (file) => {
+export const uploadImage = async (file) => {
     return new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream(
             {
@@ -27,5 +27,3 @@ const uploadImage = async (file) => {
         ).end(file.buffer);
     });
 };
-
-module.exports = uploadImage;

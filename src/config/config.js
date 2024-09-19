@@ -1,6 +1,6 @@
-require('dotenv').config();
+import 'dotenv/config';
 
-const config = {
+export const config = {
     PORT: process.env.PORT || 5000,
     MONGO_DEV_URI: process.env.MONGO_DEV_URI,
     MONGO_PROD_URI: process.env.MONGO_PROD_URI,
@@ -12,4 +12,3 @@ const config = {
     DB_NAME: process.env.DB_NAME,
 };
 
-module.exports = config;

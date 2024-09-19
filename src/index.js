@@ -1,7 +1,8 @@
-const express = require('express');
-const connectDB = require('./config/db');
-const config = require('./config/config');
-const cors = require('cors');
+import cors from 'cors';
+import express from 'express';
+import { config } from './config/config.js';
+import { connectDB } from './config/db.js';
+
 
 const app = express();
 
@@ -12,9 +13,13 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
-// Routes
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/user', require('./routes/userRoutes'));
+// Routes imports
+import userRouter from './routes/userRoutes.js';
+import authRouter from './routes/authRoutes.js';
+
+//routes
+app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 
 // Start Server
 const PORT = config.PORT;

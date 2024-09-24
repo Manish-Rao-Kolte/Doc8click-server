@@ -100,6 +100,7 @@ export const login = async (req, res) => {
             lastName: user.lastName,
             gender: user.gender,
             image: user.image,
+            address: user.address,
             token,
             refreshToken
         });

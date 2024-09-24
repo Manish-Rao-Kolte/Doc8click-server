@@ -61,7 +61,7 @@ export const signup = async (req, res) => {
 // @route   POST api/auth/login
 // @desc    Authenticate user and get token
 // @access  Public
-// @req     { email, phoneNumber, password }
+// @req     { email, phoneNumber, password }    
 export const login = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -73,7 +73,7 @@ export const login = async (req, res) => {
     try {
         if (!email && !phoneNumber) {
             return res.status(400).json({ msg: 'Please enter all fields' });
-        }
+        }   
         if(email) {
             if (!password) {
                 return res.status(400).json({ msg: 'Please enter all fields' });

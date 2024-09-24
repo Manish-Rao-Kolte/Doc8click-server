@@ -51,7 +51,8 @@ export const signup = async (req, res) => {
             gender: user.gender,
             image: user.image,
             token,
-            refreshToken
+            refreshToken,
+            address: user.address
         });
     } catch (error) {
         res.status(500).json({ msg: 'Server error' });
@@ -91,14 +92,13 @@ export const login = async (req, res) => {
         await user.save();
         const refreshToken = generateToken(user); // For simplicity, using the same function
 
-        res.json({
+        res.status(200).json({
             id: user.id,
             username: user.username,
             email: user.email,
             phoneNumber: user.phoneNumber,
             firstName: user.firstName,
             lastName: user.lastName,
-            gender: user.gender,
             image: user.image,
             address: user.address,
             token,

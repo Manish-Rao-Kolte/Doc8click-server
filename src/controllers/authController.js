@@ -101,6 +101,7 @@ export const login = async (req, res) => {
             lastName: user.lastName,
             image: user.image,
             address: user.address,
+            gender: user.gender,
             token,
             refreshToken
         });

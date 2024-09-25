@@ -63,6 +63,7 @@ export const updateProfile = async (req, res) => {
             gender: updatedUser.gender,
             image: updatedUser.image,
             token: updatedUser.token,
+            address: updatedUser.address,
         });
     } catch (error) {
         res.status(500).json({ msg: 'Server error' });

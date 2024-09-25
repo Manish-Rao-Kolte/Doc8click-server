@@ -12,6 +12,7 @@ const UserSchema = new Schema({
     phoneNumber: { type: String, required: true, unique: true },
     token: { type: String },
     address: { type: String },
+    appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }],
 });
 
 UserSchema.pre('save', async function (next) {
